@@ -12,7 +12,7 @@ from trimport import FunctionPathFactory
 fn_dir = os.path.dirname(os.path.realpath(__file__)) + "/path/"
 factory = FunctionPathFactory(fn_dir)
 
-fn, *rest = factory._function_paths
+fn, *rest = factory.function_paths
 
 print(fn.clipped_path)
 print(fn.fn_path)

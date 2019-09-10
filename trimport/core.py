@@ -53,6 +53,10 @@ class FunctionPathFactory(object):
         self._norm_path = os.path.normpath(self._path)
         self._function_paths = self._compute_structure()
 
+    @property
+    def function_paths(self):
+        return self._function_paths
+
     def _compute_structure(self):
         """uses a helper function to find files
         from a given path.  Currently uses glob
