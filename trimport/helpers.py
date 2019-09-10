@@ -70,7 +70,7 @@ def _extract_objects_from_path(path, allowed_methods=None):
     if allowed_methods is not None:
         fns &= set(allowed_methods)
     if allowed_methods is None:
-        fns = {fn for fn in fns if not fn.startswith('__')}
+        fns = {fn for fn in fns if not fn.startswith("__")}
 
     return {fn: getattr(module, fn) for fn in fns}
 

@@ -24,11 +24,14 @@ class FunctionPath(object):
     base_path: str,
         base_path to be clipped for route generation
     """
+
     def __init__(self, filename, base_path):
         self._filename = filename
         self._base_path = base_path
         self.methods = _extract_objects_from_path(self._filename)
-        self._clipped_path = _remove_base_path_from_file(self._base_path, self._filename)
+        self._clipped_path = _remove_base_path_from_file(
+            self._base_path, self._filename
+        )
         self._fn_path = _convert_path_to_function(self._clipped_path)
 
     @property
@@ -48,6 +51,7 @@ class FunctionPathFactory(object):
     path : str
         path to begin searching for routes
     """
+
     def __init__(self, path):
         self._path = path
         self._norm_path = os.path.normpath(self._path)

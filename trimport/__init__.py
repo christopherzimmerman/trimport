@@ -8,5 +8,5 @@
 """
 from .core import FunctionPathFactory
 from .core import FunctionPath
-_version__ = '0.0.1dev'
 
+_version__ = "0.0.1dev"
