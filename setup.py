@@ -47,7 +47,6 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     packages=find_packages("trimport"),
-    package_dir={"": "trimport"},
     include_package_data=True,
     python_requires=">=3.5",
     extras_require={
