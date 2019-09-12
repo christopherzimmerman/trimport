@@ -46,7 +46,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    packages=find_packages("trimport"),
+    packages=find_packages(),
     include_package_data=True,
     python_requires=">=3.5",
     extras_require={
