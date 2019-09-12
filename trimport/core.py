@@ -25,10 +25,10 @@ class FunctionPath(object):
         base_path to be clipped for route generation
     """
 
-    def __init__(self, filename, base_path):
+    def __init__(self, filename, base_path, allowed_methods=None):
         self._filename = filename
         self._base_path = base_path
-        self.methods = _extract_objects_from_path(self._filename)
+        self.methods = _extract_objects_from_path(self._filename, allowed_methods)
         self._clipped_path = _remove_base_path_from_file(
             self._base_path, self._filename
         )
@@ -52,16 +52,16 @@ class FunctionPathFactory(object):
         path to begin searching for routes
     """
 
-    def __init__(self, path):
+    def __init__(self, path, allowed_methods=None):
         self._path = path
         self._norm_path = os.path.normpath(self._path)
-        self._function_paths = self._compute_structure()
+        self._function_paths = self._compute_structure(allowed_methods)
 
     @property
     def function_paths(self):
         return self._function_paths
 
-    def _compute_structure(self):
+    def _compute_structure(self, allowed_methods=None):
         """uses a helper function to find files
         from a given path.  Currently uses glob
         in virtually a one line function, but in
@@ -72,6 +72,6 @@ class FunctionPathFactory(object):
         m : [FunctionPath] -- List of base routes for each found file
         """
         return [
-            FunctionPath(file, self._norm_path)
+            FunctionPath(file, self._norm_path, allowed_methods)
             for file in _find_files_from_path(self._norm_path)
         ]
