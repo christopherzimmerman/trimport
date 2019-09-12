@@ -17,5 +17,5 @@ fn, *rest = factory.function_paths
 print(fn.clipped_path)
 print(fn.fn_path)
 
-print(fn.methods['hello_world']())
-print(fn.methods['add_two_ints'](2, 2))
+print(fn.methods["hello_world"]())
+print(fn.methods["add_two_ints"](2, 2))
