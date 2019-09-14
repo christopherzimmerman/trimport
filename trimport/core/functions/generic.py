@@ -7,11 +7,16 @@
     :license: BSD-3-Clause
 """
 import os
+from typing import Optional, List
 
-from .helpers import _extract_objects_from_path
-from .helpers import _find_files_from_path
-from .helpers import _convert_path_to_function
-from .helpers import _remove_base_path_from_file
+from trimport.testing.utils import _validate_dtype
+
+from trimport.core.common import (
+    extract_objects_from_path,
+    remove_base_path_from_file,
+    convert_path_to_function,
+    find_files_from_path,
+)
 
 
 class FunctionPath(object):
@@ -25,14 +30,19 @@ class FunctionPath(object):
         base_path to be clipped for route generation
     """
 
-    def __init__(self, filename, base_path, allowed_methods=None):
+    def __init__(
+        self,
+        filename: str,
+        base_path: str,
+        extension: str = ".py",
+        allowed_methods: Optional[List[str]] = None,
+    ):
         self._filename = filename
         self._base_path = base_path
-        self.methods = _extract_objects_from_path(self._filename, allowed_methods)
-        self._clipped_path = _remove_base_path_from_file(
-            self._base_path, self._filename
-        )
-        self._fn_path = _convert_path_to_function(self._clipped_path)
+        self._extension = extension
+        self.methods = extract_objects_from_path(self._filename, allowed_methods)
+        self._clipped_path = remove_base_path_from_file(self._base_path, self._filename)
+        self._fn_path = convert_path_to_function(self._clipped_path)
 
     @property
     def clipped_path(self):
@@ -52,16 +62,28 @@ class FunctionPathFactory(object):
         path to begin searching for routes
     """
 
-    def __init__(self, path, allowed_methods=None):
-        self._path = path
-        self._norm_path = os.path.normpath(self._path)
-        self._function_paths = self._compute_structure(allowed_methods)
+    def __init__(
+        self,
+        path: str,
+        extension: str = ".py",
+        allowed_methods: Optional[List[str]] = None,
+    ):
+        if not isinstance(path, str):
+            _validate_dtype("path", type(path), str)
 
-    @property
-    def function_paths(self):
-        return self._function_paths
+        if not isinstance(extension, str):
+            _validate_dtype("extension", type(extension), str)
 
-    def _compute_structure(self, allowed_methods=None):
+        if not isinstance(allowed_methods, (list, type(None))):
+            _validate_dtype("extension", type(allowed_methods), (list, type(None)))
+
+        self.path = path
+        self.norm_path = os.path.normpath(self.path)
+        self.extension = extension
+        self.allowed_methods = allowed_methods
+        self.function_paths = self._compute_structure()
+
+    def _compute_structure(self) -> [FunctionPath]:
         """uses a helper function to find files
         from a given path.  Currently uses glob
         in virtually a one line function, but in
@@ -71,7 +93,8 @@ class FunctionPathFactory(object):
         -------
         m : [FunctionPath] -- List of base routes for each found file
         """
+        path = self.norm_path
         return [
-            FunctionPath(file, self._norm_path, allowed_methods)
-            for file in _find_files_from_path(self._norm_path)
+            FunctionPath(file, path, self.extension, self.allowed_methods)
+            for file in find_files_from_path(self.norm_path)
         ]
