@@ -9,7 +9,6 @@
 import glob
 import importlib.util
 import os
-import re
 
 
 def _find_files_from_path(path):
@@ -22,7 +21,8 @@ def _find_files_from_path(path):
     -------
     paths : list of paths for an application
     """
-
+    if not os.path.isdir(path):
+        raise NotADirectoryError('{} is not a directory'.format(path))
     # python file extension
     glob_opts = {"pathname": path + "/**/*.py", "recursive": True}
 
