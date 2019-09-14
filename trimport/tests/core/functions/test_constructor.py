@@ -34,15 +34,18 @@ class TestFunctionPathFactoryConstructor:
 class TestFunctionPathConstructor:
     """
     """
+
     @pytest.mark.parametrize(
         "filename, base_path, extension, allowed_methods",
         [
             (None, "foo", ".py", ["foo"]),
             ("/api", None, ".py", ["foo"]),
             ("/api", "foo", None, ["foo"]),
-            ("/api", "foo", ".py", object())
-        ]
+            ("/api", "foo", ".py", object()),
+        ],
     )
-    def test_constructor_bad_arguments(self, filename, base_path, extension, allowed_methods):
+    def test_constructor_bad_arguments(
+        self, filename, base_path, extension, allowed_methods
+    ):
         with pytest.raises(TypeError):
             FunctionPath(filename, base_path, extension, allowed_methods)

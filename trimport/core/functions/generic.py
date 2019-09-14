@@ -38,16 +38,16 @@ class FunctionPath(object):
         allowed_methods: Optional[List[str]] = None,
     ):
         if not isinstance(filename, str):
-            _validate_dtype('filename', type(filename), str)
+            _validate_dtype("filename", type(filename), str)
 
         if not isinstance(base_path, str):
-            _validate_dtype('base_path', type(filename), str)
+            _validate_dtype("base_path", type(filename), str)
 
         if not isinstance(extension, str):
-            _validate_dtype('extension', type(extension), str)
+            _validate_dtype("extension", type(extension), str)
 
         if not isinstance(allowed_methods, (list, type(None))):
-            _validate_dtype('allowed_methods', type(allowed_methods), str)
+            _validate_dtype("allowed_methods", type(allowed_methods), str)
 
         self._filename = filename
         self._base_path = base_path
