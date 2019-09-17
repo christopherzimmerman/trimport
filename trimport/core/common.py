@@ -64,7 +64,7 @@ def extract_objects_from_path(
     """
     spec = importlib.util.spec_from_file_location("module", path)
     module = importlib.util.module_from_spec(spec)
-
+    module.__name__ = None
     spec.loader.exec_module(module)
 
     fns = set(dir(module))
