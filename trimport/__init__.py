@@ -9,4 +9,4 @@
 from .core.functions.generic import FunctionPath
 from .core.functions.generic import FunctionPathFactory
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
